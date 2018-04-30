@@ -1,9 +1,12 @@
 module subrutyny
 contains
+
+	! SUBRUTYNY WYPEŁNIANIA TABEL - wypełniają tabele losowymi liczbami z funkcji random_number
+
 	subroutine fill_table_1 (table, size)
 	implicit none
-	integer (kind=4) :: size
-	real (kind=4) :: table(size)
+	integer (kind=4), intent (in) :: size
+	real (kind=4), intent (out) :: table(size)
 
 	call random_number(table)
 
@@ -14,8 +17,8 @@ contains
 
 	subroutine fill_table_2 (table, size1, size2)
 	implicit none
-	integer (kind=4) :: size1, size2
-	real (kind=4) :: table(size1, size2)
+	integer (kind=4), intent (in) :: size1, size2
+	real (kind=4), intent (out) :: table(size1, size2)
 
 	call random_number(table)
 
@@ -23,11 +26,14 @@ contains
 
 	end subroutine
 
+	! SUBRUTYNA ALGORYTMU - przyjmuje dwie table i stosuje algorytm Gauss'a
 
 	subroutine calculation_algorithm  (table_a, table_x, size_a1, size_a2, size_x1)
 	implicit none
-	integer (kind=4) :: i, j, size_a1, size_a2, size_x1
-	real (kind=4) :: table_a(size_a1, size_a2), table_x(size_x1), c
+	integer (kind=4), intent (in) :: size_a1, size_a2, size_x1
+	integer (kind=4) :: i, j
+	real (kind=4), intent (out) :: table_a(size_a1, size_a2), table_x(size_x1)
+	real (kind=4) :: c
 
 	do i=1,size_a1
 		do j=1,size_a2
@@ -57,13 +63,11 @@ implicit none
 
 ! DEFINICJA ZMIENNYCH
 
-integer (kind=4) :: i, j, iSize
-real (kind=4) :: c
+integer (kind=4) :: iSize
 real (kind=4), allocatable, dimension(:,:) :: a
 real (kind=4), allocatable, dimension(:) :: x
 
-iSize = 10
-
+iSize = 3
 
 ! ALOKOWANIE TABLIC
 
