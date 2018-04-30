@@ -22,15 +22,40 @@ contains
 	!write (*,*) table
 
 	end subroutine
+
+
+	subroutine calculation_algorithm  (table_a, table_x, size_a1, size_a2, size_x1)
+	implicit none
+	integer (kind=4) :: i, j, size_a1, size_a2, size_x1
+	real (kind=4) :: table_a(size_a1, size_a2), table_x(size_x1), c
+
+	do i=1,size_a1
+		do j=1,size_a2
+			if (i .ne. j) then
+				c = ( table_a(i,j) / table_a(i,i) )
+				table_a(:,j) = table_a(:,j) - c*table_a(:,i)
+				table_x(j) = table_x(j) - c*table_x(i)
+				table_x(i) = table_x(i) / table_a(i,i)
+				table_a(:,i) = table_a(:,i)/table_a(i,i)
+			end if
+		end do
+	end do
+
+	end subroutine
+
 end module subrutyny
 
 
 
 program main
 
+! DOŁĄCZANE MODUŁY
+
 use subrutyny
 
 implicit none
+
+! DEFINICJA ZMIENNYCH
 
 integer (kind=4) :: i, j, iSize
 real (kind=4) :: c
@@ -52,22 +77,9 @@ call fill_table_2 (a, iSize, iSize)
 
 ! ALGORYTM OBLICZENIOWY
 
-do i=1,iSize
-	do j=1,iSize
-		if (i .ne. j) then
-			c = ( a(i,j) / a(i,i) )
-				a(:,j) = a(:,j) - c*a(:,i)
-				x(j) = x(j) - c*x(i)
-				x(i) = x(i) / a(i,i)
-				a(:,i) = a(:,i)/a(i,i)
-		end if
-	end do
-end do
+call calculation_algorithm (a, x, iSize, iSize, iSize)
 
-!write (*,*) size(a(:,:))
-!write (*,*) size(x)
-
-write (*,*) a
-write (*,*) x
+!write (*,*) a
+!write (*,*) x
 
 end program
