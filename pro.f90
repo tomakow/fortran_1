@@ -49,6 +49,21 @@ contains
 
 	end subroutine
 
+	subroutine save_to_file (table, size)
+	implicit none
+
+	integer (kind=4), intent (in) :: size
+	real (kind=4), intent (out) :: table(size)
+	integer (kind=4) :: i
+
+	open(unit=1, file='data.dat')
+	do i=1,size
+		write (1,*) i, table(i)
+	end do
+	close (unit=1)
+
+	end subroutine
+
 end module subrutyny
 
 
@@ -67,7 +82,7 @@ integer (kind=4) :: iSize
 real (kind=4), allocatable, dimension(:,:) :: a
 real (kind=4), allocatable, dimension(:) :: x
 
-iSize = 3
+iSize = 100
 
 ! ALOKOWANIE TABLIC
 
@@ -85,5 +100,10 @@ call calculation_algorithm (a, x, iSize, iSize, iSize)
 
 !write (*,*) a
 !write (*,*) x
+
+! ZAPISYWANIE DANYCH DO PLIKU
+
+call save_to_file (x, iSize)
+
 
 end program
