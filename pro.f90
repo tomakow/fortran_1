@@ -1,14 +1,19 @@
-#define n 10
-
 program main
 
 implicit none
 
-integer (kind=4) :: i, j, c
-real (kind=8) :: a(n,n), x(n)
+integer (kind=4) :: i, j, c, test
+real (kind=8), allocatable, dimension(:,:) :: a
+real (kind=8), allocatable, dimension(:) :: x
 
-do i=1,n
-	do j=1,n
+test = 10
+
+allocate (a(test,test))
+allocate (x(test))
+
+
+do i=1,test
+	do j=1,test
 		if (i .ne. j) then
 			c = ( a(i,j) / a(i,i) )
 				a(:,j) = a(:,j) - c*a(:,i)
@@ -18,6 +23,9 @@ do i=1,n
 		end if
 	end do
 end do
+
+write (*,*) size(a(:,:))
+write (*,*) size(x)
 
 print *, c
 
